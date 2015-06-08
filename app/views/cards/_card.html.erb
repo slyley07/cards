@@ -1,0 +1,28 @@
+<%= content_tag_for :div, card do %>
+	<% if current_user and current_user == card.project.user %>
+		<header>
+			<h3>
+				<%= best_in_place card, :title, as: :input, place_holder: "Add a title here!" %>
+			</h3>
+
+			<nav>
+				<%= link_to 'X', card_path(card), method: :delete, remote: true %>
+			</nav>
+		</header>
+		
+		<p>
+			<%= best_in_place card, :body, as: :textarea, place_holder: "Click to add some stuff" %>
+		</p>	
+
+	<% else %>
+		<header>
+			<h3>
+				<%= card.title %>
+			</h3>
+		</header>
+		
+		<p>
+			<%= card.body %>
+		</p>	
+	<% end %>
+<% end %>

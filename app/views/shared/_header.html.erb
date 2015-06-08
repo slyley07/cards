@@ -1,0 +1,38 @@
+<header>
+	<h1>
+		<% if @project and current_user == @project.user %>
+			<%= best_in_place @project, :title, as: :input, place_holder: "Project title" %>
+		<% elsif @project %>
+			<%= @project.title %>
+		<% elsif @projects %>
+			<%= "#{current_user.username.capitalize}'s Projects" %>
+		<% else %>
+				Cards 
+		<% end %>
+	</h1>
+
+	<nav>
+		<% if user_signed_in? %>
+			<% unless @projects %>
+				<%= link_to 'projects', projects_path, class: :button %> 
+				|
+			<% end %>
+
+			<% if @project %>
+				<%= link_to 'new card', project_cards_path(@project), class: :button, method: :post, remote: true %>
+				|
+			<% end %>
+			
+			<% if @projects %>
+				<%= link_to 'new project', projects_path, class: :button, method: :post %>
+				|
+			<% end %>
+
+			<%= link_to 'log out', destroy_user_session_path, class: :button, method: :delete %> 
+		<% else %>
+			<%= link_to 'log in', new_user_session_path, class: :button %> 
+			|
+			<%= link_to 'sign up', new_user_registration_path, class: :button %>
+		<% end %>
+	</nav>
+</header>
